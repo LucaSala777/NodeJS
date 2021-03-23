@@ -1,0 +1,87 @@
+<html>
+    <body id="body1">
+        <h1>Esercizio Node</h1>
+        <label for="user">User: </label>
+        <input id="user" name="user" type="text">
+        
+
+        <br>
+        <label for="pwd">Password: </label>
+        <input id="pwd" name="pwd" type="password">
+        
+
+        <span id="risultato"></span>
+
+        <script>
+            
+            
+            document.addEventListener("DOMContentLoaded", addBtn);    
+
+        </script>
+        
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script>
+            var addBtnGet = function(){
+                var btn = document.createElement("button");
+                btn.innerHTML = "LogGet";
+
+                document.getElementById("body1").append(btn);
+            
+                btn.addEventListener("click", logGet);
+            }
+            var addBtnPost = function(){
+                var btn = document.createElement("button");
+                btn.innerHTML = "LogPost";
+
+                document.getElementById("body1").append(btn);
+            
+                btn.addEventListener("click", logPost);
+            }
+
+            var logGet = function(){
+                $.ajax({
+                    url : "http://127.0.0.1:3000/loginGet",
+                    type : "get",
+                    crossDomain: true,
+                    headers: {
+                        "accept": "application/json",
+                        "Access-Control-Allow-Origin":"*"
+                    },
+                    data : {
+                        user : $('#user').val,
+                        pwd : $('#pwd').val
+                    },
+                    success : function(res){
+                        console.log("Riuscito: ", res);
+                        document.getElementById("risultato").innerHTML= "Loggato get: "+res.user;
+                    }, 
+                    error : function(res){
+                        console.log("Errore: ", res);
+                    } 
+                });
+            }
+            var logPost = function(){
+                $.ajax({
+                    url : "http://127.0.0.1:3000/login",
+                    type : "post",
+                    crossDomain: true,
+                    headers: {
+                        "accept": "application/json",
+                        "Access-Control-Allow-Origin":"*"
+                    },
+                    data : {
+                        user : $('#user').val,
+                        pwd : $('#pwd').val
+                    },
+                    success : function(res){
+                        console.log("Riuscito: ", res);
+                        document.getElementById("risultato").innerHTML= "Loggato post:"+res.user;
+                    }, 
+                    error : function(res){
+                        console.log("Errore: ", res);
+                    } 
+                });
+            }
+        </script>
+    </body>
+</html>
